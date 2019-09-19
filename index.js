@@ -237,6 +237,7 @@ function startReminderSync() {
 }
 
 (async () => {
-  await gCalendar.getClient(); //для первой авторизации и получения токена
+  require('./getCalendarList');
+  
   startReminderSync();
 })()

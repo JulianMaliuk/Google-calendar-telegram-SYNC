@@ -54,7 +54,11 @@
   ### Настройка доступа к календарю
   В [консоли google](https://developers.google.com/calendar/quickstart/nodejs) активируем Google Calendar API, скачиваем конфигурационный файл `credentials.json` и сохраняем его в корневой директории проекта.
 
-  Настройки календарей и доступа telegram в файле `config.js`
+  Настройки календарей (ID, название) и доступа telegram (Token) в файле `config.js`
+
+  ### Получение ID календарей для аккаунта:
+
+    yarn getCalendarList
 
 ## Запуск
 

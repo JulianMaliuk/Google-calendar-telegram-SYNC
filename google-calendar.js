@@ -96,6 +96,23 @@ async function fetchEvents(auth, timeMin, timeMax, opt) {
   })
 }
 
+async function fetchCalendarList(auth) {
+  return new Promise((resolve, reject) => {
+    const calendar = google.calendar({version: 'v3', auth});
+    calendar.calendarList.list({
+
+    }, (err, res) => {
+      if (err) {
+        debug('The API returned an error: ' + err)
+        return reject('The API returned an error: ' + err);
+      };
+
+      const calendarList = res.data.items;
+      resolve(calendarList);
+    });
+  })
+}
+
 async function getOAuth2Client() {
   return new Promise((resolve, reject) => {
     fs.readFile('credentials.json', async (err, content) => {
@@ -111,3 +128,4 @@ exports.getClient = getClient;
 exports.getAccessToken = getAccessToken;
 exports.fetchEvents = fetchEvents;
 exports.getOAuth2Client = getOAuth2Client;
+exports.fetchCalendarList = fetchCalendarList;
