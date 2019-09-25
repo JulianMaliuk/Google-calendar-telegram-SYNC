@@ -45,12 +45,15 @@ module.exports = (app) => {
     const day = (format(start, 'dd-iiiiii.', {
       locale: ru
     })).toLocaleUpperCase();
+
+    const { accountName, publics } = reminder;
+
     eventText += `*${textDate}*\n`;
-    eventText += `*${reminder.accountName}*\n\n`;
+    eventText += `*${accountName}*\n\n`;
     eventText += `*${day} ${event.summary} ${getEventDateFormat(start, end)}*`;
   
-    console.log(`<${accountName.toLocaleUpperCase()}>`, 'Sending a reminder:', eventText, '<<>> to:', reminder.publics.map(public => public.id).join(', '));
-    reminder.publics.forEach(public => {
+    console.log(`<${accountName.toLocaleUpperCase()}>`, 'Sending a reminder:', eventText, '<<>> to:', publics.map(public => public.id).join(', '));
+    publics.forEach(public => {
       telegram.sendMessage(public.id, eventText, {
         parse_mode: 'Markdown'
       });

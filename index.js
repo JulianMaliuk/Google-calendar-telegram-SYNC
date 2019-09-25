@@ -1,6 +1,7 @@
 var debug = require('debug')('app:')
-const { getOrCreateConfig } = require('./config');
-const schedules = require('./schedules')
+const { getOrCreateConfig } = require('./config/getConfig');
+const schedules = require('./modules/schedules')
+const { getCalendarList } = require('./modules/google/google-calendar');
 require('dotenv').config();
 
 const app = {
@@ -13,12 +14,12 @@ const app = {
   calendars: getOrCreateConfig().GOOGLE_CALENDAR,
 };
 
-require('./telegram/bot')(app);
-require('./events')(app);
-const reminder = require('./reminder')(app);
+require('./modules/telegram/bot')(app);
+require('./modules/events')(app);
+const reminder = require('./modules/reminder')(app);
 
 (async () => {
-  await require('./getCalendarList');
+  await getCalendarList();
   reminder.reminderSync();
   reminder.run();
   schedules.run();

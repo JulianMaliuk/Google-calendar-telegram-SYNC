@@ -1,14 +1,16 @@
 const fs = require('fs');
+const path = require('path')
 const readline = require('readline');
 const {google} = require('googleapis');
 var debug = require('debug')('app:google-calendar')
 
 const SCOPES = ['https://www.googleapis.com/auth/calendar.readonly'];
-const TOKEN_PATH = 'token.json';
+const TOKEN_PATH = path.join(__dirname, 'token.json');
+const CREDENTAILS_PATH = path.join(__dirname, 'credentials.json');
 
 async function getCredentials() {
   return new Promise((resolve, reject) => {
-    fs.readFile('credentials.json', async (err, content) => {
+    fs.readFile(CREDENTAILS_PATH, async (err, content) => {
       if (err) {
         console.error('Error loading client secret file:', err);
         return reject('Error loading client secret file:', err);
@@ -109,7 +111,7 @@ async function fetchCalendarList(auth) {
 
 async function getOAuth2Client() {
   return new Promise((resolve, reject) => {
-    fs.readFile('credentials.json', async (err, content) => {
+    fs.readFile(CREDENTAILS_PATH, async (err, content) => {
       if (err) return reject('Error loading client secret file:', err);
       // Authorize a client with credentials, then call the Google Calendar API.
       const oAuth2Client = await gCalendar.authorize(JSON.parse(content));
@@ -118,8 +120,19 @@ async function getOAuth2Client() {
   })
 }
 
+const getCalendarList = async () => {
+  require('console.table');
+  const auth = await getClient();
+  const calendarList = await fetchCalendarList(auth);
+
+  const infoAccount = calendarList.map(calendar => ({'Название': calendar.summary, 'ID': calendar.id, timeZone: calendar.timeZone}))
+  console.log(`\n************************ Календари доступные для Вашего аккаунта ************************\n`)
+  console.table(infoAccount);
+}
+
 exports.getClient = getClient;
 exports.getAccessToken = getAccessToken;
 exports.fetchEvents = fetchEvents;
 exports.getOAuth2Client = getOAuth2Client;
 exports.fetchCalendarList = fetchCalendarList;
+exports.getCalendarList = getCalendarList;

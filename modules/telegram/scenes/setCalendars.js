@@ -1,8 +1,8 @@
 const Scene = require('telegraf/scenes/base')
 const Markup = require('telegraf/markup')
-const gCalendar = require('./../../google-calendar');
+const gCalendar = require('../../google/google-calendar');
 const fs = require('fs');
-const { calendarsHelper } = require('./../commands')
+const { calendarsHelper } = require('../commands')
 var debug = require('debug')('app:setCalendar')
 
 String.prototype.trunc = String.prototype.trunc ||
@@ -62,11 +62,11 @@ const onActionSubscribe = (ctx, app, setCalendars) => {
       })
     }
 
-    fs.readFile('./config.json', (err, data) => {
+    fs.readFile('./config/config.json', (err, data) => {
       if(!err) {
         const parsed = JSON.parse(data);
         parsed.GOOGLE_CALENDAR = app.calendars;
-        fs.writeFile('./config.json', JSON.stringify(parsed, null, 2), err => {
+        fs.writeFile('./config/config.json', JSON.stringify(parsed, null, 2), err => {
           if(!err) {
             ctx.reply(`Аккаунт <${reqChatTitle}> привязан (календарь: <${selected.summary.toLocaleUpperCase()}>).`)
             helperSubscribeCalendar(ctx)
@@ -86,11 +86,11 @@ const onActionUnsubscribe = (ctx, app) => {
   ctx.deleteMessage()
   app.calendars = app.calendars.filter(calendar => calendar.calendarID !== selectedCalendar.id);
   ctx.session.calendars = app.calendars;
-  fs.readFile('./config.json', (err, data) => {
+  fs.readFile('./config/config.json', (err, data) => {
     if(!err) {
       const parsed = JSON.parse(data);
       parsed.GOOGLE_CALENDAR = app.calendars;
-      fs.writeFile('./config.json', JSON.stringify(parsed, null, 2), err => {
+      fs.writeFile('./config/config.json', JSON.stringify(parsed, null, 2), err => {
         if(!err) {
           ctx.reply(`Календарь <${selectedCalendar.summary.toLocaleUpperCase()}> отвязан.`)   
           return ctx.scene.leave();   

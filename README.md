@@ -57,10 +57,6 @@
   Переименовать файл `.env.example` в `.env`.
   Настроить доступ telegramBOT (Token) в файле `.env`.
 
-  ### Получение ID календарей для аккаунта:
-
-    yarn getCalendarList
-
 ## Запуск
 
     $ yarn start

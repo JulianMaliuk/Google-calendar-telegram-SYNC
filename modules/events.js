@@ -1,7 +1,7 @@
 const { format, parseISO, addMinutes, addDays, isBefore, isAfter, subMinutes, 
   isEqual, startOfDay, startOfMonth, endOfMonth, addMonths} = require('date-fns');
 const { ru } = require('date-fns/locale');
-const gCalendar = require('./google-calendar');
+const gCalendar = require('./google/google-calendar');
 const { getEventDateFormat } = require('./helpers')
 var debug = require('debug')('app:events')
 

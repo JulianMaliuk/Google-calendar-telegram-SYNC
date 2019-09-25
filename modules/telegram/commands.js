@@ -1,4 +1,4 @@
-const gCalendar = require('../google-calendar');
+const gCalendar = require('../google/google-calendar');
 const Markup = require('telegraf/markup');
 const { localize } = require('date-fns/locale/ru');
 

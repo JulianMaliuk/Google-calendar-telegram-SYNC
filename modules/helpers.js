@@ -1,5 +1,6 @@
 const { format, addDays, subSeconds, isEqual, isSameDay, startOfDay } = require('date-fns');
 const { ru } = require('date-fns/locale');
+const gCalendar = require('./google/google-calendar');
 
 function isReminderAllDay(start, end) {
   return isEqual(end, startOfDay(end)) && isEqual(addDays(start, 1), end)
@@ -8,7 +9,6 @@ function isReminderAllDay(start, end) {
 function isReminderManyDays(start, end) {
   return !isSameDay(start, subSeconds(end, 1))
 }
-
 
 function getEventDateFormat(start, end) {
  
