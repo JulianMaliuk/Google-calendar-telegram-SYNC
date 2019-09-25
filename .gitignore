@@ -3,3 +3,4 @@ config.js
 token.json
 yarn.lock
 node_modules/
+.env
