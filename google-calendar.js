@@ -1,20 +1,16 @@
 const fs = require('fs');
 const readline = require('readline');
 const {google} = require('googleapis');
+var debug = require('debug')('app:google-calendar')
 
 const SCOPES = ['https://www.googleapis.com/auth/calendar.readonly'];
 const TOKEN_PATH = 'token.json';
-const IS_DEBUG = process.env.NODE_ENV === 'production' ? true : false;
-
-function debug() {
-  if (IS_DEBUG) console.log.apply(console, arguments);
-}
 
 async function getCredentials() {
   return new Promise((resolve, reject) => {
     fs.readFile('credentials.json', async (err, content) => {
       if (err) {
-        debug('Error loading client secret file:', err);
+        console.error('Error loading client secret file:', err);
         return reject('Error loading client secret file:', err);
       }
       resolve(JSON.parse(content))
@@ -46,7 +42,7 @@ async function getAccessToken(oAuth2Client) {
       access_type: 'offline',
       scope: SCOPES,
     });
-    debug('Authorize this app by visiting this url:', authUrl);
+    console.log('Authorize this app by visiting this url:', authUrl);
     const rl = readline.createInterface({
       input: process.stdin,
       output: process.stdout,
@@ -63,8 +59,6 @@ async function getAccessToken(oAuth2Client) {
           fs.writeFile(TOKEN_PATH, JSON.stringify(token), (err) => {
             if (err) {
               console.error(err);
-            } else {
-              debug('Token stored to', TOKEN_PATH);
             }
           });
           resolve(oAuth2Client);

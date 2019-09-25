@@ -1,0 +1,48 @@
+{
+  "GOOGLE_CALENDAR": [
+    {
+      "accountName": "calendar",
+      "calendarID": "hnga1dnh63fnq974f8vloaeks0@group.calendar.google.com",
+      "publics": [
+        {
+          "id": 150262834,
+          "title": "Julian_maljuk"
+        }
+      ]
+    },
+    {
+      "accountName": "Julian Maljuk",
+      "calendarID": "julian.maljuk@gmail.com",
+      "publics": [
+        {
+          "id": 150262834,
+          "title": "Julian_maljuk"
+        }
+      ]
+    },
+    {
+      "accountName": "Work",
+      "calendarID": "786sjrlvof9k03jf6ifr711io8@group.calendar.google.com",
+      "publics": [
+        {
+          "id": 150262834,
+          "title": "Julian_maljuk"
+        }
+      ]
+    },
+    {
+      "accountName": "Contacts",
+      "calendarID": "addressbook#contacts@group.v.calendar.google.com",
+      "publics": [
+        {
+          "id": 150262834,
+          "title": "Julian_maljuk"
+        },
+        {
+          "id": -1001296462001,
+          "title": "TestPublic1"
+        }
+      ]
+    }
+  ]
+}
