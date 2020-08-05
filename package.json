@@ -15,6 +15,6 @@
   },
   "scripts": {
     "start": "cross-env NODE_ENV=production node ./index.js",
-    "dev": "cross-env NODE_ENV=development DEBUG=app:* 'nodemon --ignore config/config.json ./index'"
+    "dev": "cross-env NODE_ENV=development DEBUG=app:* 'nodemon --ignore config/config.json ./index.js'"
   }
 }

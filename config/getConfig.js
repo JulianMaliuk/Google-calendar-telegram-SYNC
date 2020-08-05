@@ -7,7 +7,7 @@ function getOrCreateConfig() {
   } catch (err) {
     const config = { GOOGLE_CALENDAR: [] } 
     if (err.code === 'MODULE_NOT_FOUND') {
-      fs.writeFileSync(name, JSON.stringify(config, null, 1))
+      fs.writeFileSync('./config.json', JSON.stringify(config, null, 1))
     }
     return config;
   }
