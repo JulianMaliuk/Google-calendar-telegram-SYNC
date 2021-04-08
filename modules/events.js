@@ -27,26 +27,26 @@ module.exports = (app) => {
       const auth = await gCalendar.getClient();
   
       switch (type) {
-        case 'same': { // текущий месяц
+        case 'same': { // current month
           const now = new Date();
           const start = now.getDate() === 15 ? startOfDay(now) : startOfMonth(now);
           const events = await gCalendar.fetchEvents(auth, start, endOfMonth(now), opt);
           sendEventsList(type, events, opt);
           break;
         }
-        case 'next': { // следующий месяц
+        case 'next': { // next month
           const next = addMonths(new Date(), 1);
           const events = await gCalendar.fetchEvents(auth, startOfMonth(next), endOfMonth(next), opt);
           sendEventsList(type, events, opt);
           break;
         }
-        case 'month': { // с указанием месяца
+        case 'month': { // with selected month
           const date = new Date().setMonth(opt.month);
           const events = await gCalendar.fetchEvents(auth, startOfMonth(date), endOfMonth(date), opt);
           sendEventsList(type, events, opt);
           break;
         }
-        case 'reminder': { // ближайшие уведомления
+        case 'reminder': { // coming notifications
           const events = await gCalendar.fetchEvents(auth, opt.lastDateEvents, addDays(opt.lastDateEvents, 30), opt);
           handlerNewEvents(events, opt);
           break;
@@ -88,11 +88,11 @@ module.exports = (app) => {
         eventsList += `*${day} ${event.summary} ${getEventDateFormat(start, end)}*\n\n`
       });
   
-      if (reqChatID) { // Если был ручной запрос
+      if (reqChatID) { // If there was a manual request
         telegram.sendMessage(reqChatID, eventsList, {
           parse_mode: 'Markdown'
         });
-      } else { // При автоматическом запросе отправляем всем пабликам
+      } else { // With an automatic request, we send to all publics
         publics.forEach(public => {
           telegram.sendMessage(public.id, eventsList, {
             parse_mode: 'Markdown'
